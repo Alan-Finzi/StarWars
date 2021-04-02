@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   rxdart: ^0.24.1
+  cloud_firestore: ^0.12.10+2
   http:
 
   flutter_localizations:

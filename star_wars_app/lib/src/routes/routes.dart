@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:star_wars_app/src/page/detail_page.dart';
+import 'package:star_wars_app/src/page/home_page.dart';
 import 'package:star_wars_app/src/page/start_page.dart';
 
-///////////////////////////////////////////////////////
-//// DON'T DELETE AND ADIT COMMENTS OF THIS PAGE  /////
-//// Enter the routes in their respective module  /////
-///////////////////////////////////////////////////////
 class ApplicationRoutes {
     static Map<String, WidgetBuilder> getApplicationRoutes(){
         return <String, WidgetBuilder> {
             //#application
             StartPage.routeName       : (BuildContext context) => StartPage(),
-
+            HomePage.routeName        : (BuildContext context) => HomePage(),
+            DetailPage.routeName        : (BuildContext context) => DetailPage(),
         };
     }
 }
 
 
-
-//////////////////////////////////////
 //////////////////////////////////////
 ///  MUST BE IMPLEMENT NEXT CLASS  ///
 //////////////////////////////////////
@@ -37,7 +34,9 @@ class StarWarsRoutes{
     static Map<String, dynamic> _navigationData = {
 
         //#application()
-        StartPage.routeName           : StartPage(),
+        StartPage.routeName          : StartPage(),
+        HomePage.routeName           : HomePage(),
+        DetailPage.routeName         : DetailPage(),
 
     };
 }

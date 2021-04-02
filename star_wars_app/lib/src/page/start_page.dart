@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:star_wars_app/src/page/home_page.dart';
 import 'package:star_wars_app/src/widgets/appBar.dart';
+import 'package:star_wars_app/src/widgets/widget_curve.dart';
+import 'package:star_wars_app/utils/styles/app_colors.dart';
 
 
 class StartPage extends StatelessWidget {
@@ -53,14 +56,13 @@ class StartPage extends StatelessWidget {
                     child: RaisedButton(
                         shape: StadiumBorder(),
                         color: Color.fromRGBO(40, 40, 120, 1.0),
-                        textColor: Colors.white,
-                        child: Text('Click aquí para ingresar', style: TextStyle(fontSize: 15.0),),
-                        padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
+                        child: WidgetRipplesAnimation(width:200,height:50,borderRadiusSize: 20,child: Text('Click aquí para ingresar', style: TextStyle(fontSize: 15.0,color: Colors.white),) ,color: AppColors.appBlue,),
                         onPressed: (){
-                            //Navigator.pushNamed(context, FirstPage.routeName);
+                            Navigator.pushNamed(context, HomePage.routeName);
                         },
                     )
             ),
         );
     }
 }
+// ,

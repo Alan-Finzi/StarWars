@@ -7,14 +7,13 @@ class StarWarAppBar extends StatefulWidget {
     final BuildContext context;
     final String title;
     final String fontFamily;
-    final bool showNotifications;
     final Widget leading;
     final List<Widget> actionsAvailables;
     final bool showHelp;
     final Color color;
     final bool shadow;
 
-    StarWarAppBar({@required this.context,  @required this.title, @required this.actionsAvailables, @required this.showNotifications, this.fontFamily, this.leading, @required this.showHelp, this.color, this.shadow = true});
+    StarWarAppBar({@required this.context,  @required this.title, @required this.actionsAvailables,  this.fontFamily, this.leading, @required this.showHelp, this.color, this.shadow = true});
 
     @override
     _StarWarAppBarState createState() => _StarWarAppBarState();
@@ -27,13 +26,13 @@ class _StarWarAppBarState extends State<StarWarAppBar> {
             title: Text(widget.title, style: TextStyle(fontFamily: widget.fontFamily, fontSize: 20.0)),
             backgroundColor:widget.color== null? Colors.blue : widget.color,
             centerTitle: false,
-            actions: _actionsAvailables(showNotifications: widget.showNotifications, actions: widget.actionsAvailables, showHelp: widget.showHelp),
+            actions: _actionsAvailables( actions: widget.actionsAvailables, showHelp: widget.showHelp),
             leading: widget.leading,
             shadowColor: widget.shadow ? Colors.black : Colors.transparent,
         );
     }
 
-    List<Widget> _actionsAvailables({bool showNotifications, List<Widget> actions, @required bool showHelp} ){
+    List<Widget> _actionsAvailables({ List<Widget> actions, @required bool showHelp} ){
             if(showHelp==true){
                 actions.add(_help());
             }
@@ -67,7 +66,6 @@ Widget starWarsAppBar({@required BuildContext context, @required bool showHelp, 
                     color: color,
                     actionsAvailables: actionsAvailables,
                     fontFamily: fontFamily,
-                    showNotifications: showNotifications,
                     leading: leading,
                     showHelp: showHelp ,
                     shadow: shadow,
