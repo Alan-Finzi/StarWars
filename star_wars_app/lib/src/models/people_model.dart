@@ -1,24 +1,52 @@
+
 import 'dart:convert';
 
-class PeopleModel {
-    PeopleModel({
-                    this.name,
-                    this.height,
-                    this.mass,
-                    this.hairColor,
-                    this.skinColor,
-                    this.eyeColor,
-                    this.birthYear,
-                    this.gender,
-                    this.homeworld,
-                    this.films,
-                    this.species,
-                    this.vehicles,
-                    this.starships,
-                    this.created,
-                    this.edited,
-                    this.url,
-                });
+class ListModelPeople {
+    int count;
+    String next;
+    dynamic previous;
+    List<Result> results;
+
+    ListModelPeople({this.count, this.next, this.previous, this.results,});
+
+    factory ListModelPeople.fromRawJson(String str) => ListModelPeople.fromJson(json.decode(str));
+
+    String toRawJson() => json.encode(toJson());
+
+    factory ListModelPeople.fromJson(Map<String, dynamic> json) => ListModelPeople(
+        count: json["count"],
+        next: json["next"],
+        previous: json["previous"],
+        results: List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "count": count,
+        "next": next,
+        "previous": previous,
+        "results": List<dynamic>.from(results.map((x) => x.toJson())),
+    };
+}
+
+class Result {
+    Result({
+               this.name,
+               this.height,
+               this.mass,
+               this.hairColor,
+               this.skinColor,
+               this.eyeColor,
+               this.birthYear,
+               this.gender,
+               this.homeworld,
+               this.films,
+               this.species,
+               this.vehicles,
+               this.starships,
+               this.created,
+               this.edited,
+               this.url,
+           });
 
     String name;
     String height;
@@ -27,7 +55,7 @@ class PeopleModel {
     String skinColor;
     String eyeColor;
     String birthYear;
-    String gender;
+    Gender gender;
     String homeworld;
     List<String> films;
     List<String> species;
@@ -37,11 +65,11 @@ class PeopleModel {
     DateTime edited;
     String url;
 
-    factory PeopleModel.fromRawJson(String str) => PeopleModel.fromJson(json.decode(str));
+    factory Result.fromRawJson(String str) => Result.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory PeopleModel.fromJson(Map<String, dynamic> json) => PeopleModel(
+    factory Result.fromJson(Map<String, dynamic> json) => Result(
         name: json["name"],
         height: json["height"],
         mass: json["mass"],
@@ -49,7 +77,7 @@ class PeopleModel {
         skinColor: json["skin_color"],
         eyeColor: json["eye_color"],
         birthYear: json["birth_year"],
-        gender: json["gender"],
+        gender: genderValues.map[json["gender"]],
         homeworld: json["homeworld"],
         films: List<String>.from(json["films"].map((x) => x)),
         species: List<String>.from(json["species"].map((x) => x)),
@@ -68,7 +96,7 @@ class PeopleModel {
         "skin_color": skinColor,
         "eye_color": eyeColor,
         "birth_year": birthYear,
-        "gender": gender,
+        "gender": genderValues.reverse[gender],
         "homeworld": homeworld,
         "films": List<dynamic>.from(films.map((x) => x)),
         "species": List<dynamic>.from(species.map((x) => x)),
@@ -78,4 +106,26 @@ class PeopleModel {
         "edited": edited.toIso8601String(),
         "url": url,
     };
+}
+
+enum Gender { MALE, N_A, FEMALE }
+
+final genderValues = EnumValues({
+    "female": Gender.FEMALE,
+    "male": Gender.MALE,
+    "n/a": Gender.N_A
+});
+
+class EnumValues<T> {
+    Map<String, T> map;
+    Map<T, String> reverseMap;
+
+    EnumValues(this.map);
+
+    Map<T, String> get reverse {
+        if (reverseMap == null) {
+            reverseMap = map.map((k, v) => new MapEntry(v, k));
+        }
+        return reverseMap;
+    }
 }
