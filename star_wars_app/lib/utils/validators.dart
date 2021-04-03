@@ -7,7 +7,7 @@ class Validators{
                 if(mode  != null ){
                     sink.add(mode);
                 }else{
-                    sink.addError(null);
+                    sink.addError(false);
                 }
             }
     );

@@ -17,33 +17,35 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+
+    bool showProgress = false;
+
     @override
     Widget build(BuildContext context) {
-
+        Bloc bloc = ProviderBloc.of(context);
         return Drawer(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                         Divider(height: 0,),
                         SizedBox(height: 20,),
+                        showProgress?
+                        CircularProgressIndicator():
                         ListTile(
                             leading: Container(width: 50.0, child: Icon(Icons.add_circle), padding: EdgeInsets.symmetric(horizontal: 15),),
-                            title: Text('Modo'),
+                            title: getText(bloc),
                             onTap: () async {
-                                Bloc bloc = ProviderBloc.of(context);
                                 final resp = await alertYesNo(context: context, title:  'modo',body: 'Elige el modo de conexión');
+                                setState(() {showProgress = true;});
                                 bloc.changeMode(resp);
                                 if(resp==true){
                                     PeopleProvider _peopleProvider = PeopleProvider();
                                    final data = await _peopleProvider.getPeople();
-                                    for (var item in data.results) {
-                                     final resul = await   _peopleProvider.insetPeopleFirebase(item);
-                                     if(resul['ok']==true){
-                                         alertOk(context: context,body: 'Modo Online activado',title: 'Modo ONLINE');
-                                     }
+                                   for (var item in data.results) {
+                                      await   _peopleProvider.insetPeopleFirebase(item);
                                     }
                                 }
-
+                                setState(() {showProgress = false;});
                                 },
                         ),
                         SizedBox(height: 20,),
@@ -60,6 +62,19 @@ class _AppDrawerState extends State<AppDrawer> {
                         Divider(height: 0,),
                     ],
                 )
+        );
+    }
+
+
+    Widget getText(Bloc bloc){
+        return  StreamBuilder(
+            stream: bloc.modeStream,
+            builder: (BuildContext context, AsyncSnapshot snapshot){
+                if(snapshot.hasData){
+                    return snapshot.data == false?
+                        Text('Modo Offline') :  Text('Modo Online');
+                }else{return  Text('Modo Offline');}
+            },
         );
     }
 }
