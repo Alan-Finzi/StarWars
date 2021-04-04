@@ -4,6 +4,7 @@ import 'package:star_wars_app/src/providers/provider_bloc.dart';
 import 'package:star_wars_app/src/providers/provider_report.dart';
 import 'package:star_wars_app/src/widgets/appBar.dart';
 import 'package:star_wars_app/src/widgets/widget_alert.dart';
+import 'package:star_wars_app/src/widgets/widget_card_people.dart';
 import 'package:star_wars_app/src/widgets/widget_curve.dart';
 import 'package:star_wars_app/src/widgets/widget_drawer.dart';
 import 'package:star_wars_app/utils/styles/app_colors.dart';
@@ -46,25 +47,8 @@ class _DetailPageState extends State<DetailPage> {
                 subtitle: Column(
                     children: [
                         SizedBox(height: 10,),
-                        Row(children: [
-                            Text('Gender: ',style: TextStyle(color: Colors.black87,fontSize: 18),),
-                            Text(data['gender'],style: TextStyle(color: Colors.black87,fontSize: 18)),
-                        ],),
-                        SizedBox(height: 10,),
-                        Row(children: [
-                            Text('Mass: ',style: TextStyle(color: Colors.black87,fontSize: 18),),
-                            Text(data['mass'].toString(),style: TextStyle(color: Colors.black87,fontSize: 18)),
-                        ],),
-                        SizedBox(height: 10,),
-                        Row(children: [
-                            Text('hair color: ',style: TextStyle(color: Colors.black87,fontSize: 18),),
-                            Text(data['hair_color'].toString(),style: TextStyle(color: Colors.black87,fontSize: 18)),
-                        ],),
-                        SizedBox(height: 10,),
-                        Row(children: [
-                            Text('height: ',style: TextStyle(color: Colors.black87,fontSize: 18),),
-                            Text(data['height'].toString(),style: TextStyle(color: Colors.black87,fontSize: 18)),
-                        ],),
+                        WidgetCardDetailPeople(title1: 'Gender',value1: data['gender'],title2: 'Mass',value2: data['mass'].toString(),width: MediaQuery.of(context).size.width-55,),
+                        WidgetCardDetailPeople(title1: 'hair color',value1: data['hair_color'].toString(),title2: 'height',value2: data['height'].toString(),width: MediaQuery.of(context).size.width-55,),
                     ],
                 ),
             ),
